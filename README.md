@@ -5,4 +5,4 @@ The Python scripts in this repository implement **PAQu**, the simulation study a
 - *PAQu.py*: This script contains the routine to run PAQu.
 - *PAQu_simulations.py*: This script implements the main simulation study.
 - *PAQu_application.py*: This script implements the analysis of real-data using PAQu.
-- *format_upload.py*: This script formats the outputs of the *PAQu_application.py* to make it easier to analyze it.
+- *format_upload.py*: This script formats the outputs of the *PAQu_application.py* to make it easier to analyze them.
