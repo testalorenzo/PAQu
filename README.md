@@ -34,15 +34,15 @@ I  =  I₀  +  T × W  +  A × D  +  noise
 P  ≈  I × Z  +  noise
 ```
 
-| Symbol | Meaning | Dimensions |
-|--------|---------|------------|
-| **P** | Observed peptide intensities | n samples × r peptides |
-| **I** | Latent isoform abundances (estimated) | n samples × q isoforms |
-| **Z** | Peptide-to-isoform mapping weights | q isoforms × r peptides |
-| **A** | Binary condition/treatment indicator | n samples |
-| **D** | Condition effect on isoform abundances | q isoforms |
-| **T** | Transcript-level expression covariates | n samples × q isoforms |
-| **W** | Transcript effect on isoform abundances | q isoforms |
+| Symbol | Meaning | Dimensions | Estimated |
+|--------|---------|------------|:---------:|
+| **P** | Observed peptide intensities | n samples × r peptides | ❌ |
+| **I** | Latent isoform abundances | n samples × q isoforms | ✅ |
+| **Z** | Peptide-to-isoform mapping weights | q isoforms × r peptides | ✅ |
+| **A** | Binary condition/treatment indicator | n samples | ❌ |
+| **D** | Condition effect on isoform abundances | q isoforms | ✅ |
+| **T** | Transcript-level expression covariates | n samples × q isoforms | ❌ |
+| **W** | Transcript effect on isoform abundances | q isoforms | ✅ |
 
 Parameters are inferred via **Gibbs sampling** with conjugate priors. Posterior uncertainty is summarised through the **Local False Sign Rate (LFSR)**.
 
