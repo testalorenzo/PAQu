@@ -17,7 +17,7 @@
 
 **PAQu** is a Bayesian method for estimating protein isoform abundances from mass-spectrometry proteomics data. It integrates mass spectrometry and gene expression data to resolve ambiguity when peptide sequences match multiple protein isoforms. The model decomposes observed peptide intensities into isoform-level signals using a Gibbs sampler, while accounting for sample covariates, transcript-level information, and condition effects. PAQu provides uncertainty quantification and a unified multiomics framework for improved accuracy.
 
-It was applied to study protein isoform differences in schizophrenia, revealing elevated C4A levels in affected individuals versus controls.
+It was applied to study protein isoform differences in schizophrenia, revealing elevated C4A levels — but not C4B — in affected individuals versus controls.
 
 The method is described in:
 
@@ -30,6 +30,7 @@ The method is described in:
 PAQu frames isoform quantification as a constrained matrix factorisation problem:
 
 ```
+I  =  I₀  +  T × W  +  A × D  +  noise
 P  ≈  I × Z  +  noise
 ```
 
@@ -39,7 +40,7 @@ P  ≈  I × Z  +  noise
 | **I** | Latent isoform abundances (estimated) | n samples × q isoforms |
 | **Z** | Peptide-to-isoform mapping weights | q isoforms × r peptides |
 
-Parameters are inferred via **Gibbs sampling** with conjugate priors. A spike-and-slab prior on the condition effect **D** enables sparse differential-abundance testing; posterior uncertainty is summarised through the **Local False Sign Rate (LFSR)**.
+Parameters are inferred via **Gibbs sampling** with conjugate priors. Posterior uncertainty is summarised through the **Local False Sign Rate (LFSR)**.
 
 Optional inputs enrich the model:
 - **A** — binary condition/treatment indicator
@@ -64,7 +65,7 @@ Optional inputs enrich the model:
 There is no package to install. Clone the repository and make sure the dependencies are available:
 
 ```bash
-git clone https://github.com/tstlnz/PAQu.git
+git clone https://github.com/testalorenzo/PAQu.git
 cd PAQu
 pip install numpy scipy tqdm pandas joblib networkx
 ```
