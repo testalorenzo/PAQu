@@ -19,6 +19,8 @@
 
 It was applied to study protein isoform differences in schizophrenia, revealing elevated C4A levels — but not C4B — in affected individuals versus controls.
 
+For more details, visit the [PAQu website](https://testalorenzo.github.io/PAQu_web/).
+
 The method is described in:
 
 > Testa L., Klei L., Rengle A., Yocum A., Lewis D.A., Devlin B., Roeder K., MacDonald M.L. (2026). *Estimating protein isoform abundances with PAQu*. biorXiv. https://doi.org/10.64898/2026.04.20.719668
