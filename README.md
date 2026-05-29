@@ -39,12 +39,14 @@ P  ≈  I × Z  +  noise
 | **P** | Observed peptide intensities | n samples × r peptides |
 | **I** | Latent isoform abundances (estimated) | n samples × q isoforms |
 | **Z** | Peptide-to-isoform mapping weights | q isoforms × r peptides |
+| **A** | Binary condition/treatment indicator | n samples |
+| **D** | Condition effect on isoform abundances | q isoforms |
+| **T** | Transcript-level expression covariates | n samples × q isoforms |
+| **W** | Transcript effect on isoform abundances | q isoforms |
 
 Parameters are inferred via **Gibbs sampling** with conjugate priors. Posterior uncertainty is summarised through the **Local False Sign Rate (LFSR)**.
 
 Optional inputs enrich the model:
-- **A** — binary condition/treatment indicator
-- **T** — transcript-level expression covariates
 - **Xi / Xp** — additional sample-level or peptide-level covariates
 
 ---
