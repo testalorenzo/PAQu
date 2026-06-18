@@ -60,9 +60,14 @@ Optional inputs enrich the model:
 | File | Description |
 |------|-------------|
 | `PAQu/` | Installable package — `PAQu` class (model + Gibbs sampler) |
+| `vignette.ipynb` | Interactive walkthrough with pre-rendered figures |
+
+### `application/`
+
+| File | Description |
+|------|-------------|
 | `PAQu_application.py` | Real-data analysis pipeline |
 | `format_upload.py` | Post-processing helper to format output files |
-| `vignette.ipynb` | Interactive walkthrough with pre-rendered figures |
 
 ### `simulations/`
 
