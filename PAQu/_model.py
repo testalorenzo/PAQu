@@ -412,7 +412,7 @@ class PAQu():
         print('Fitting PAQu')
 
         start = time.time()
-        for it in tqdm(range(n_iter)):
+        for it in tqdm(range(n_iter), disable=not verbose):
             self._gibbs_step()
 
             self.I_storer[it] = self.I
@@ -472,3 +472,97 @@ class PAQu():
         box = getattr(self, storer)[burn_in:,]
         lfsr = np.minimum(np.mean(box >= 0, axis=0), np.mean(box <= 0, axis=0))
         return lfsr
+
+    def credible_interval(self, storer, burn_in, prob=0.95):
+        """
+        Compute equal-tailed posterior credible intervals.
+
+        Parameters
+        ----------
+        storer : str
+            Name of the storer to summarise (e.g. 'D_storer', 'W_storer').
+        burn_in : int
+            Number of burn-in iterations to discard.
+        prob : float
+            Credible mass, between 0 and 1. Default 0.95.
+
+        Returns
+        -------
+        lower : np.ndarray, shape (q,)
+        upper : np.ndarray, shape (q,)
+        """
+        alpha = (1 - prob) / 2
+        box = getattr(self, storer)[burn_in:]
+        lower = np.percentile(box, 100 * alpha,       axis=0)
+        upper = np.percentile(box, 100 * (1 - alpha), axis=0)
+        return lower, upper
+
+    def plot_convergence(self, params=('D_storer', 'W_storer', 'sigmaI_storer'), burn_in=0, figsize=None):
+        """
+        Trace plots with running means for selected parameters.
+
+        Parameters
+        ----------
+        params : sequence of str
+            Storer names to plot. Each must have shape (n_iter, q).
+            Defaults to D, W and sigma_I.
+        burn_in : int
+            Draws a vertical dashed line at this iteration (0 = no line).
+        figsize : tuple or None
+            Figure size; defaults to (4 * q, 3 * len(params)).
+
+        Returns
+        -------
+        matplotlib.figure.Figure
+        """
+        import matplotlib.pyplot as plt
+
+        available = [p for p in params if getattr(self, p) is not None]
+        if not available:
+            raise ValueError("No fitted parameters to plot. Call fit() first.")
+
+        _labels = {
+            'D_storer':      'D  (condition effect)',
+            'W_storer':      'W  (transcript coupling)',
+            'sigmaI_storer': 'sigma_I  (isoform noise)',
+            'pi_storer':     'pi  (inclusion prob.)',
+            'I0_storer':     'I0  (intercept)',
+            'theta_storer':  'theta',
+            'tauD_storer':   'tau_D',
+            'tauW_storer':   'tau_W',
+            'tauZ_storer':   'tau_Z',
+            'tauI_storer':   'tau_I',
+        }
+
+        nrows = len(available)
+        ncols = self.q
+        if figsize is None:
+            figsize = (4 * ncols, 3 * nrows)
+
+        fig, axes = plt.subplots(nrows, ncols, figsize=figsize, squeeze=False)
+
+        for row, param in enumerate(available):
+            arr = getattr(self, param)
+            n_iter = arr.shape[0]
+            x = np.arange(n_iter)
+            label = _labels.get(param, param)
+
+            for col in range(ncols):
+                ax = axes[row, col]
+                trace = arr[:, col]
+                running_mean = np.cumsum(trace) / (x + 1)
+
+                ax.plot(x, trace, lw=0.7, alpha=0.55, color='steelblue')
+                ax.plot(x, running_mean, lw=1.5, color='navy', label='running mean')
+                if burn_in > 0:
+                    ax.axvline(burn_in, color='crimson', ls='--', lw=1.2, label=f'burn-in = {burn_in}')
+                ax.set_title(f'{label}\nisoform {col}', fontsize=9)
+                ax.set_xlabel('Iteration', fontsize=8)
+                ax.tick_params(labelsize=7)
+                if col == 0:
+                    ax.set_ylabel('Value', fontsize=8)
+                if col == 0 and row == 0:
+                    ax.legend(fontsize=7)
+
+        fig.tight_layout()
+        return fig

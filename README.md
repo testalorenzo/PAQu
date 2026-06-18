@@ -59,21 +59,59 @@ Optional inputs enrich the model:
 
 | File | Description |
 |------|-------------|
-| `PAQu.py` | Core `PAQu` class — model definition and Gibbs sampler |
-| `PAQu_simulations.py` | Simulation study from the paper |
+| `PAQu/` | Installable package — `PAQu` class (model + Gibbs sampler) |
 | `PAQu_application.py` | Real-data analysis pipeline |
 | `format_upload.py` | Post-processing helper to format output files |
+| `vignette.ipynb` | Interactive walkthrough with pre-rendered figures |
+
+### `simulations/`
+
+| File | Description |
+|------|-------------|
+| `synthetic_simulations.py` | Fully synthetic simulation study from the paper |
+
+#### `simulations/realistic_simulations/`
+
+Semi-synthetic simulation study using real proteomics data. Data files (`annotations.csv`, `P_values.csv`, `T_values.csv`, `meta_peptide.csv`) are expected two levels above this folder (i.e. at the repository root). Run scripts from within this folder.
+
+| File | Description |
+|------|-------------|
+| `_blocks.py` | Shared helper: loads annotations, builds bipartite blocks and collapsed-isoform dictionaries |
+| `_utils.py` | Shared helper: ROC curve utilities |
+| `select_subset.py` | One-time step: selects a ~10,000-peptide block-aligned subset of the real dataset |
+| `generate_data.py` | Per-replicate data perturbation: samples control subjects, draws ~15 % of isoforms as truly DE, and shifts their peptide intensities by D_size |
+| `run_paqu.py` | Fits PAQu on every (seed, D_size) replicate |
+| `run_isobayes.py` | Fits IsoBayes per sample on every replicate |
+| `run_isobayes_persample.R` | R helper called by `run_isobayes.py`: fits IsoBayes to a single sample |
+| `run_de_methods.R` | R helper: applies edgeR, DESeq2 and limma-voom to an IsoBayes-derived counts matrix |
+| `run_peptide_baselines.py` | Computes naive peptide-abundance baselines (per-isoform t-test on average / sum / max of mapped peptides) |
+| `compare_methods.py` | ROC analysis comparing PAQu, IsoBayes and peptide baselines |
+| `compare_methods_combined.py` | Produces the combined 10-vs-10 and 5-vs-5 comparison figures |
 
 ---
 
 ## Installation
 
-There is no package to install. Clone the repository and make sure the dependencies are available:
+Install directly from GitHub:
+
+```bash
+pip install git+https://github.com/testalorenzo/PAQu.git
+```
+
+Or clone and install in editable mode (recommended if you want to inspect or modify the source):
 
 ```bash
 git clone https://github.com/testalorenzo/PAQu.git
 cd PAQu
-pip install numpy scipy tqdm pandas joblib networkx
+pip install -e .
+```
+
+Core dependencies (`numpy`, `scipy`, `tqdm`) are installed automatically. Optional extras:
+
+```bash
+pip install "PAQu[plot]"        # matplotlib — for plot_convergence() and the vignette
+pip install "PAQu[app]"         # pandas, networkx, joblib — for the application scripts
+pip install "PAQu[plot,app]"    # everything
 ```
 
 ---
