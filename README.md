@@ -5,7 +5,7 @@
 <h1 align="center">PAQu — Protein Isoform Abundance Quantification</h1>
 
 <p align="center">
-  <a href="https://www.biorxiv.org/content/10.64898/2026.04.20.719668v1"><img src="https://img.shields.io/badge/paper-biorXiv-red" alt="Paper"/></a>
+  <a href="https://www.pnas.org/doi/10.1073/pnas.2614319123"><img src="https://img.shields.io/badge/paper-PNAS-red" alt="Paper"/></a>
   <a href="https://testalorenzo.github.io/PAQu_web/"><img src="https://img.shields.io/badge/website-PAQu-blue" alt="Website"/></a>
   <img src="https://img.shields.io/badge/python-3.8%2B-blue" alt="Python 3.8+"/>
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License"/>
@@ -23,7 +23,7 @@ For more details, visit the [PAQu website](https://testalorenzo.github.io/PAQu_w
 
 The method is described in:
 
-> Testa L., Klei L., Rengle A., Yocum A., Lewis D.A., Devlin B., Roeder K., MacDonald M.L. (2026). *Estimating protein isoform abundances with PAQu*. biorXiv. https://doi.org/10.64898/2026.04.20.719668
+> Testa L., Klei L., Rengle A., Yocum A., Lewis D.A., Devlin B., Roeder K., MacDonald M.L. (2026). *Estimating protein isoform abundances with PAQu*. PNAS (https://www.pnas.org/doi/10.1073/pnas.2614319123)
 
 ---
 
@@ -157,11 +157,16 @@ If you use PAQu in your research, please cite:
 ```bibtex
 @article{testa2026paqu,
   title   = {Estimating protein isoform abundances with {PAQu}},
-  author  = {Testa, L. and Klei, L. and Rengle, A. and Yocum, A. and Lewis, D. A. and Devlin, B. and Roeder, K. and MacDonald, M. L.},
-  journal = {biorXiv},
+  author  = {Testa, Lorenzo and Klei, Lambertus and Rengle, Alesia
+             and Yocum, Anastasia and Lewis, David A. and Devlin, Bernie
+             and Roeder, Kathryn and MacDonald, Matthew L.},
+  journal = {Proceedings of the National Academy of Sciences},
+  volume  = {123},
+  number  = {38},
+  pages   = {e2614319123},
   year    = {2026},
-  doi     = {10.64898/2026.04.20.719668},
-  url     = {https://www.biorxiv.org/content/10.64898/2026.04.20.719668v1}
+  doi     = {10.1073/pnas.2614319123},
+  url     = {https://www.pnas.org/doi/10.1073/pnas.2614319123}
 }
 ```
 
